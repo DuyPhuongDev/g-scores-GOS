@@ -29,11 +29,10 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Loading data from {}", DATA_PATH);
 
         Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM exam_result", Integer.class);
         if (count != null && count > 0) return;
-
+        log.info("Loading data from {}", DATA_PATH);
         InputStream inputStream = getInputStream(DATA_PATH);
 
         int totalInserted = 0;

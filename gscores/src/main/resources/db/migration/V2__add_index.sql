@@ -1,0 +1,1 @@
+CREATE INDEX idx_top_10_group_a_coalesce ON "exam_result" ((COALESCE(math, 0) + COALESCE(physics, 0) + COALESCE(chemistry, 0)) DESC);
