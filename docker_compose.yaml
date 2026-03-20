@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gscores-postgres
+    environment:
+      POSTGRES_USER: gsuser
+      POSTGRES_PASSWORD: gspassword
+      POSTGRES_DB: gsdb
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: always
+    networks:
+      - gscores-network
+
+networks:
+  gscores-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
