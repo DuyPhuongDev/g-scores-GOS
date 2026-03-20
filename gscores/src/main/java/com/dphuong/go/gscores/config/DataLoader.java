@@ -1,25 +1,28 @@
 package com.dphuong.go.gscores.config;
 
-import com.dphuong.go.gscores.entity.ExamResult;
-import com.dphuong.go.gscores.repository.ExamResultRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class DataLoader implements CommandLineRunner {
-    private final ExamResultRepository examResultRepository;
+    private final JdbcTemplate jdbcTemplate;
+
+    private static final int BATCH_SIZE = 10000;
+    private static final String INSERT_SQL = """
+            INSERT INTO exam_result (sbd, math, literature, foreign_language, physics, chemistry, biology, history, geography, civic_education, foreign_language_code)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """;
 
     @Value("${data.file-path}")
     private String DATA_PATH;
@@ -27,14 +30,18 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         log.info("Loading data from {}", DATA_PATH);
-        if (examResultRepository.count() > 0) return;
+
+        Integer count = jdbcTemplate.queryForObject("SELECT COUNT(*) FROM exam_result", Integer.class);
+        if (count != null && count > 0) return;
 
         InputStream inputStream = getInputStream(DATA_PATH);
 
-        try(BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
+        int totalInserted = 0;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             boolean firstLine = true;
-            List<ExamResult> examResults = new ArrayList<>();
+            List<Object[]> batch = new ArrayList<>(BATCH_SIZE);
+
             while ((line = br.readLine()) != null) {
                 if (firstLine) {
                     firstLine = false;
@@ -42,26 +49,35 @@ public class DataLoader implements CommandLineRunner {
                 }
 
                 String[] arr = line.split(",", -1);
-                ExamResult examResult = ExamResult.builder()
-                        .sbd(arr[0])
-                        .math(parseBigDecimal(arr[1]))
-                        .literature(parseBigDecimal(arr[2]))
-                        .foreignLanguage(parseBigDecimal(arr[3]))
-                        .physics(parseBigDecimal(arr[4]))
-                        .chemistry(parseBigDecimal(arr[5]))
-                        .biology(parseBigDecimal(arr[6]))
-                        .history(parseBigDecimal(arr[7]))
-                        .geography(parseBigDecimal(arr[8]))
-                        .civicEducation(parseBigDecimal(arr[9]))
-                        .foreignLanguageCode(arr.length>10 ? arr[10] : null)
-                        .build();
+                batch.add(new Object[]{
+                        arr[0],
+                        parseBigDecimal(arr[1]),
+                        parseBigDecimal(arr[2]),
+                        parseBigDecimal(arr[3]),
+                        parseBigDecimal(arr[4]),
+                        parseBigDecimal(arr[5]),
+                        parseBigDecimal(arr[6]),
+                        parseBigDecimal(arr[7]),
+                        parseBigDecimal(arr[8]),
+                        parseBigDecimal(arr[9]),
+                        arr.length > 10 ? arr[10] : null
+                });
 
-                examResults.add(examResult);
+                if (batch.size() == BATCH_SIZE) {
+                    jdbcTemplate.batchUpdate(INSERT_SQL, batch);
+                    totalInserted += batch.size();
+                    log.info("Inserted {} records...", totalInserted);
+                    batch.clear();
+                }
             }
-            log.info("Loading {} exam results", examResults.size());
-            examResultRepository.saveAll(examResults);
-            log.info("Loaded {} exam results", examResults.size());
+
+            if (!batch.isEmpty()) {
+                jdbcTemplate.batchUpdate(INSERT_SQL, batch);
+                totalInserted += batch.size();
+            }
         }
+
+        log.info("Loaded {} exam results successfully", totalInserted);
     }
 
 

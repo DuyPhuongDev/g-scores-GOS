@@ -5,7 +5,7 @@ spring:
   application:
     name: gscores
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:gsdb}
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5433}/${DB_NAME:gsdb}?reWriteBatchedInserts=true
     driver-class-name: org.postgresql.Driver
     username: ${DB_USER:gsuser}
     password: ${DB_PASSWORD:gspassword}
