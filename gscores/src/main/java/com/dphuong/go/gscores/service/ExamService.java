@@ -10,4 +10,6 @@ public interface ExamService {
     ExamResultResponse getExamResultBySbd(String sbd);
 
     List<ExamResultResponse> top10GroupA();
+
+    List<ExamResultResponse> top10Group(String groupName);
 }

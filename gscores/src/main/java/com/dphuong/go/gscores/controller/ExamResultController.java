@@ -4,10 +4,7 @@ import com.dphuong.go.gscores.dto.ExamResultResponse;
 import com.dphuong.go.gscores.service.ExamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -26,6 +23,13 @@ public class ExamResultController {
     @GetMapping("/top-10-group-a")
     public ResponseEntity<List<ExamResultResponse>> getTop10GroupA() {
         return ResponseEntity.ok(examService.top10GroupA());
+    }
+
+    @GetMapping("/top-10-highest-scores")
+    public ResponseEntity<List<ExamResultResponse>> getTopNGroup(
+            @RequestParam(name = "group", defaultValue = "A00") String group) {
+
+        return ResponseEntity.ok(examService.top10Group(group));
     }
 
 }

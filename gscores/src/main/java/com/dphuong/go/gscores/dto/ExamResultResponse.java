@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.sql.rowset.spi.SyncResolver;
 import java.math.BigDecimal;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -24,6 +25,7 @@ public class ExamResultResponse {
     private BigDecimal geography;
     private BigDecimal civicEducation;
     private String foreignLanguageCode;
+    private BigDecimal total;
 
     public static ExamResultResponse toResponse(ExamResult examResult) {
         return ExamResultResponse.builder()
