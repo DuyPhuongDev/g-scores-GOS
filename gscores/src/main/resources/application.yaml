@@ -1,5 +1,6 @@
 server:
   port: 8888
+  address: 0.0.0.0
 
 spring:
   application:
@@ -25,6 +26,6 @@ spring:
     redis:
       time-to-live: 3600000 # 60 phút
       cache-null-values: false
-      key-prefix: 'gscores::'
+      key-prefix: "gscores::"
 data:
   file-path: classpath:data/diem_thi_thpt_2024.csv
