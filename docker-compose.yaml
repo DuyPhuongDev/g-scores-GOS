@@ -1,0 +1,67 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: gscores-postgres
+    environment:
+      POSTGRES_USER: gsuser
+      POSTGRES_PASSWORD: gspassword
+      POSTGRES_DB: gsdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+      - gscores-network
+  redis:
+    image: redis:latest
+    container_name: gscores-redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    restart: always
+    networks:
+      - gscores-network
+
+  gscores-backend:
+    # image: gscores:latest
+    build:
+      context: ./gscores
+      dockerfile: Dockerfile
+    container_name: gscores-backend
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: gsdb
+      DB_USER: gsuser
+      DB_PASSWORD: gspassword
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+    ports:
+      - 8888:8888
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - gscores-network
+
+  g-scores-ui:
+    build:
+      context: ./g-scores-ui
+      dockerfile: Dockerfile
+    container_name: g-scores-ui
+    environment:
+      NEXT_PUBLIC_API_BASE_URL: http://localhost:8888/api/v1
+    ports:
+      - 3000:3000
+    depends_on:
+      - gscores-backend
+    networks:
+      - gscores-network
+
+networks:
+  gscores-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  redis_data:
