@@ -7,14 +7,15 @@ import lombok.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-@Getter
 @Setter
-public class ExamResultResponse {
+@Getter
+public class Top10ScoresResponse {
     private String sbd;
-    private String foreignLanguageCode;
+    private String groupName;
     private List<ScoreResponse> scores;
     private BigDecimal total;
 }
