@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
+import { Sidebar, TopBar } from "@/components/layout/layout-components";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -22,7 +23,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="vi" suppressHydrationWarning>
-      <body className={`${rubik.className} antialiased`}>{children}</body>
+      <body className={`${rubik.className} antialiased`}>
+        <div className="min-h-screen bg-surface">
+          <TopBar />
+          <Sidebar />
+          {children}
+        </div>
+      </body>
     </html>
   );
 }
