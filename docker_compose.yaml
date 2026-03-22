@@ -19,9 +19,21 @@ services:
     networks:
       - gscores-network
 
+  redis:
+    image: redis:latest
+    container_name: gscores-redis
+    ports:
+      - 6379:6379
+    volumes:
+      - redis_data:/data
+    restart: always
+    networks:
+      - gscores-network
+
 networks:
   gscores-network:
     driver: bridge
 
 volumes:
   postgres_data:
+  redis_data:
