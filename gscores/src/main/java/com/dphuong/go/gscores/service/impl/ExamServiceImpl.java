@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +51,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @Cacheable(value = "top10Group", key = "#groupName")
     public List<Top10ScoresResponse> top10Group(String groupName) {
         log.info("top10Group: {}", groupName);
 
@@ -61,6 +63,7 @@ public class ExamServiceImpl implements ExamService {
     }
 
     @Override
+    @Cacheable(value = "stats")
     public List<ChartDataResponse> getStats() {
         return scoreRepository.getChartData();
     }

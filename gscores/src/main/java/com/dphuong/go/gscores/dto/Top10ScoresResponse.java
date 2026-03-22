@@ -4,6 +4,7 @@ package com.dphuong.go.gscores.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -13,7 +14,8 @@ import java.util.List;
 @Builder
 @Setter
 @Getter
-public class Top10ScoresResponse {
+public class Top10ScoresResponse implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String sbd;
     private String groupName;
     private List<ScoreResponse> scores;

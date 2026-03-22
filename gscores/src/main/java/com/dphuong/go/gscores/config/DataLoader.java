@@ -41,8 +41,8 @@ public class DataLoader implements CommandLineRunner {
 
         // Thứ tự môn học tương ứng với các cột trong file CSV của bạn (index 1 -> 9)
         String[] csvColumns = {
-                "math", "literature", "foreign_language", "physics",
-                "chemistry", "biology", "history", "geography", "civic_education"
+                "Toán", "Ngữ văn", "Ngoại ngữ", "Vật lý",
+                "Hoá học", "Sinh học", "Lịch sử", "Địa lý", "GDCD"
         };
 
         log.info("Starting batch import from CSV...");
