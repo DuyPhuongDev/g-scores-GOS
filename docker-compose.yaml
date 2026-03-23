@@ -26,6 +26,8 @@ services:
       context: ./gscores
       dockerfile: Dockerfile
     container_name: gscores-backend
+    ports:
+      - 8888:8888
     environment:
       DB_HOST: postgres
       DB_PORT: 5432
@@ -34,8 +36,6 @@ services:
       DB_PASSWORD: gspassword
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      URL_FRONTEND: https://gscores.dphuongdev.io.vn
-      URL_BACKEND: https://be-gscores.dphuongdev.io.vn
     depends_on:
       - postgres
       - redis
@@ -47,19 +47,12 @@ services:
       context: ./g-scores-ui
       dockerfile: Dockerfile
     container_name: g-scores-ui
+    ports:
+      - 3000:3000
     depends_on:
       - gscores-backend
     networks:
       - gscores-network
-
-  cloudflared-tunnel:
-    image: cloudflare/cloudflared:latest
-    container_name: cloudflared-tunnel
-    command: tunnel --no-autoupdate run --token ${CLOUDFLARE_TOKEN}
-    networks:
-      - gscores-network
-    depends_on:
-      - g-scores-ui
 networks:
   gscores-network:
     driver: bridge
