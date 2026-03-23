@@ -1,0 +1,34 @@
+# ===== Environment & Secrets =====
+.env
+.env.local
+.env.*.local
+
+# ===== Spring Boot / Maven =====
+gscores/target/
+gscores/.mvn/repository/
+gscores/*.log
+gscores/logs/
+
+# ===== Next.js / Node =====
+g-scores-ui/node_modules/
+g-scores-ui/.next/
+g-scores-ui/out/
+g-scores-ui/.env
+g-scores-ui/.env.local
+g-scores-ui/.env.*.local
+g-scores-ui/npm-debug.log*
+g-scores-ui/coverage/
+
+# ===== Docker =====
+docker-compose.override.yml
+
+# ===== IDE =====
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+
+# ===== OS =====
+.DS_Store
+Thumbs.db
