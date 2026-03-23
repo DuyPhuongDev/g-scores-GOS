@@ -77,14 +77,14 @@ docker compose up -d
     docker logs --tail 10 gscores-backend # If see log "Done importing data..." => done seed data
 ```
 
-### Step 5: Open service
+### Step 6: Open service
 
 ```bash
     http://localhost:3000 (Front-End)
     http://localhost:8888/swagger-ui/index.html (Back-End API docs)
 ```
 
-### Step 6: Stop service
+### Step 7: Stop service
 
 ```bash
 docker compose down
