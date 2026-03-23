@@ -1,0 +1,30 @@
+# Build output
+target/
+
+# Maven wrapper cache
+.mvn/repository/
+
+# IDE & OS
+.idea/
+*.iml
+.DS_Store
+Thumbs.db
+*.swp
+
+# Test & coverage reports
+**/*Test.java
+**/test/
+surefire-reports/
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Docker itself
+Dockerfile
+.dockerignore
+
+# Logs
+*.log
+logs/

@@ -24,8 +24,11 @@ spring:
   cache:
     type: redis
     redis:
-      time-to-live: 3600000 # 60 phút
+      time-to-live: 86400000 # 24 giờ
       cache-null-values: false
       key-prefix: "gscores::"
 data:
   file-path: classpath:data/diem_thi_thpt_2024.csv
+
+urls:
+  frontend: ${URL_FRONTEND:http://localhost:3000}
