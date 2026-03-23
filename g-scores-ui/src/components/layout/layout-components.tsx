@@ -28,8 +28,8 @@ export function Sidebar() {
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-lg font-semibold text-sm tracking-wide uppercase transition-all duration-200",
                 isActive
-                  ? "bg-blue-900 text-white shadow-md shadow-blue-900/20"
-                  : "text-slate-600 hover:bg-slate-200/50 hover:translate-x-1",
+                  ? "bg-[#0f2289] text-[#fed800] shadow-md shadow-blue-900/20"
+                  : "text-[#0f2289] hover:bg-[#0f2289]/10 hover:translate-x-1",
               )}
             >
               <item.icon className="w-5 h-5" />
@@ -44,9 +44,9 @@ export function Sidebar() {
 
 export function TopBar() {
   return (
-    <header className="fixed top-0 w-full z-50 h-16 bg-gradient-to-r from-blue-900 to-blue-800 shadow-lg shadow-blue-900/10 flex justify-between items-center px-6">
+    <header className="fixed top-0 w-full z-50 h-16 bg-[#0f2289] shadow-lg shadow-blue-900/10 flex justify-between items-center px-6">
       <div className="items-center mx-auto">
-        <span className="text-3xl font-bold tracking-tighter text-white font-inter">
+        <span className="text-3xl font-bold tracking-tighter text-[#fed800] font-inter">
           G-Scores
         </span>
       </div>
@@ -80,7 +80,7 @@ export function MobileNav() {
         <span className="text-[10px] font-bold">TRA CỨU</span>
       </Link>
       <Link
-        href="/reports"
+        href="/report"
         className={cn(
           "flex flex-col items-center gap-1",
           pathname === "/reports" ? "text-primary" : "text-slate-400",

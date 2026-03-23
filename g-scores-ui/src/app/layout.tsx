@@ -1,7 +1,11 @@
 import type { Metadata } from "next";
 import { Rubik } from "next/font/google";
 import "./globals.css";
-import { Sidebar, TopBar } from "@/components/layout/layout-components";
+import {
+  Sidebar,
+  TopBar,
+  MobileNav,
+} from "@/components/layout/layout-components";
 
 const rubik = Rubik({
   subsets: ["latin"],
@@ -28,6 +32,7 @@ export default function RootLayout({
           <TopBar />
           <Sidebar />
           {children}
+          <MobileNav />
         </div>
       </body>
     </html>
