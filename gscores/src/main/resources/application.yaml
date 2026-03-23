@@ -32,3 +32,4 @@ data:
 
 urls:
   frontend: ${URL_FRONTEND:http://localhost:3000}
+  backend: ${URL_BACKEND:http://localhost:8888}

@@ -34,7 +34,8 @@ services:
       DB_PASSWORD: gspassword
       REDIS_HOST: redis
       REDIS_PORT: 6379
-      URL_FRONTEND: http://localhost:3000
+      URL_FRONTEND: https://gscores.dphuongdev.io.vn
+      URL_BACKEND: https://be-gscores.dphuongdev.io.vn
     depends_on:
       - postgres
       - redis
@@ -46,8 +47,6 @@ services:
       context: ./g-scores-ui
       dockerfile: Dockerfile
     container_name: g-scores-ui
-    environment:
-      NEXT_PUBLIC_API_BASE_URL: http://gscores-backend:8888/api/v1
     depends_on:
       - gscores-backend
     networks:
